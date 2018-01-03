@@ -1,19 +1,5 @@
-<<<<<<< HEAD
-class TagsInput < Formtastic::Inputs::SelectInput
-  def input_html_options
-    opts = {}
-    opts[:class] = "select2-tags"
-    opts["data-width"] = @options[:width] if @options[:width]
-    super.merge(opts)
-  end
-
-  def to_html
-    relation? ? render_tags_from_relation : render_tags
-  end
-=======
 class TagsInput < ActiveAdminAddons::InputBase
   include ActiveAdminAddons::SelectHelpers
->>>>>>> 683fc44b97c82f9e02adb3ad6a74bb788338d3e2
 
   def render_custom_input
     if active_record_select?
