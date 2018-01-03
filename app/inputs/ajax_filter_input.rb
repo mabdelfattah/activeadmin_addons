@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class AjaxFilterInput < Formtastic::Inputs::SelectInput
   include ActiveAdmin::Inputs::Filters::Base
 
@@ -53,5 +54,11 @@ class AjaxFilterInput < Formtastic::Inputs::SelectInput
     else
       @options[:url] || ""
     end
+=======
+class AjaxFilterInput < SearchSelectFilterInput
+  def to_html
+    warn "[DEPRECATION] use :search_select_filter instead of :ajax_filter"
+    super
+>>>>>>> 683fc44b97c82f9e02adb3ad6a74bb788338d3e2
   end
 end

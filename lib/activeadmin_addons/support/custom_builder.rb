@@ -10,10 +10,28 @@ module ActiveAdminAddons
     end
 
     def render
+      raise NotImplementedError
     end
 
-    def self.render(context, model, *args, &block)
-      new(context, model, *args, &block).render
+    def self.create_view_methods
+      builder_class = self
+      builder_name = builder_method_name
+
+      ::ActiveAdmin::Views::TableFor.class_eval do
+        define_method("#{builder_name}_column") do |*args, &block|
+          column(*args) { |model| builder_class.new(self, model, *args, &block).render }
+        end
+      end
+
+      ::ActiveAdmin::Views::AttributesTable.class_eval do
+        define_method("#{builder_name}_row") do |*args, &block|
+          row(*args) { |model| builder_class.new(self, model, *args, &block).render }
+        end
+      end
+    end
+
+    def self.builder_method_name
+      name.underscore.to_s.split("/").last.chomp("_builder")
     end
 
     protected
@@ -24,6 +42,10 @@ module ActiveAdminAddons
 
     def options
       @options ||= has_opts? ? args.last : {}
+    end
+
+    def class_name
+      model.class.name.demodulize.underscore
     end
 
     # attachment_column :foto
@@ -43,5 +65,7 @@ module ActiveAdminAddons
     def has_opts?
       @has_opts ||= args.last.is_a?(Hash)
     end
+
+    create_view_methods
   end
 end

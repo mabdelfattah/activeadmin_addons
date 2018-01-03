@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class TagsInput < Formtastic::Inputs::SelectInput
   def input_html_options
     opts = {}
@@ -9,79 +10,60 @@ class TagsInput < Formtastic::Inputs::SelectInput
   def to_html
     relation? ? render_tags_from_relation : render_tags
   end
+=======
+class TagsInput < ActiveAdminAddons::InputBase
+  include ActiveAdminAddons::SelectHelpers
+>>>>>>> 683fc44b97c82f9e02adb3ad6a74bb788338d3e2
 
-  def relation?
-    @object.send(attributized_method_name).respond_to?(:each) &&
-      @options[:collection].class.name == "ActiveRecord::Relation"
+  def render_custom_input
+    if active_record_select?
+      return render_collection_tags
+    end
+
+    render_array_tags
   end
 
-  def render_tags
-    input_wrapping do
-      [
-        label_html,
-        builder.text_field(method, tag_options)
-      ].join("\n").html_safe
+  def load_control_attributes
+    load_data_attr(:model, value: model_name)
+    load_data_attr(:method, value: method)
+    load_data_attr(:width, default: "80%")
+
+    if active_record_select?
+      load_data_attr(:relation, value: true)
+      load_data_attr(:collection, value: collection_to_select_options, formatter: :to_json)
+    else
+      load_data_attr(:collection, value: array_to_select_options, formatter: :to_json)
     end
   end
 
-  def render_tags_from_relation
-    virtual_input_name = build_virtual_attr
+  private
 
-    input_wrapping do
-      [
-        label_html,
-        render_hidden_items,
-        builder.text_field(virtual_input_name, relation_tag_options)
-      ].flatten.join("\n").html_safe
-    end
+  def render_array_tags
+    render_tags_control { build_hidden_control(prefixed_method, method_to_input_name, input_value) }
   end
 
-  def tag_options
-    opts = input_html_options
-    opts["data-collection"] = (@options[:collection] || []).to_json
-    opts
+  def render_collection_tags
+    render_tags_control { render_selected_hidden_items }
   end
 
-  def relation_tag_options
-    opts = input_html_options
-    opts["data-model"] = model_name
-    opts["data-method"] = method
-
-    if @options[:collection].class.name != "ActiveRecord::Relation"
-      fail "collection must be an ActiveRecord::Relation instance"
-    end
-
-    opts["data-collection"] = @options[:collection].map do |item|
-      {
-        id: item.send((@options[:value] || "id")),
-        text: item.send((@options[:display_name] || "name"))
-      }
-    end.to_json
-
-    opts
+  def render_tags_control(&block)
+    concat(label_html)
+    concat(block.call)
+    concat(builder.select(build_virtual_attr, [], {}, input_html_options))
   end
 
-  def build_virtual_attr
-    attr_name = "#{method}_str"
-    @object.singleton_class.send(:attr_accessor, attr_name) unless @object.respond_to?(attr_name)
-    @object.send("#{attr_name}=", @object.send(method).join(","))
-    attr_name.to_sym
-  end
-
-  def render_hidden_items
-    prefix = "#{model_name}_#{method}"
-    attr_name = "#{model_name}[#{method}][]"
-    template.content_tag(:div, id: "#{prefix}_selected_values") do
-      template.concat(
-        builder.hidden_field(method, id: "#{prefix}_empty", name: attr_name, value: nil))
-      @object.send(method).each do |item_id|
-        attr_id = "#{prefix}_#{item_id}"
-        template.concat(builder.hidden_field(method, id: attr_id, name: attr_name, value: item_id))
+  def render_selected_hidden_items
+    template.content_tag(:div, id: selected_values_id) do
+      template.concat(build_hidden_control(empty_input_id, method_to_input_array_name, ""))
+      input_value.each do |item_id|
+        template.concat(
+          build_hidden_control(
+            method_to_input_id(item_id),
+            method_to_input_array_name,
+            item_id.to_s
+          )
+        )
       end
     end
-  end
-
-  def model_name
-    @object.class.to_s.underscore.tr('/', '_')
   end
 end

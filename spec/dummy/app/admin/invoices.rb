@@ -1,9 +1,19 @@
 ActiveAdmin.register Invoice do
   permit_params :legal_date, :number, :paid, :state, :attachment, :photo, :category_id,
-    :city_id, :amount, :color, :updated_at, item_ids: []
+    :city_id, :amount, :color, :updated_at, :active, item_ids: []
 
-  filter :id, as: :range_select
-  filter :category_id, as: :ajax_filter, url: '/admin/categories', fields: [:name]
+  filter :id, as: :numeric_range_filter
+
+  filter :category_id, as: :search_select_filter,
+                       url: proc { current_admin_user.categories_url },
+                       fields: [:name],
+                       minimum_input_length: 0
+
+  filter :buyer_id, as: :search_select_filter,
+                    minimum_input_length: 0,
+                    url: '/admin/admin_users',
+                    fields: [:email],
+                    display_name: :email
 
   index do
     selectable_column
@@ -15,6 +25,7 @@ ActiveAdmin.register Invoice do
     number_column :amount, as: :currency, unit: "$", separator: ","
     list_column :skills
     list_column :contact
+    toggle_bool_column :active
     actions
   end
 
@@ -22,6 +33,7 @@ ActiveAdmin.register Invoice do
     attributes_table do
       row :id
       tag_row :state
+      state_row :aasm_state
       bool_row :paid
       list_row :skills, list_type: :ol
       list_row :contact, localize: true
@@ -31,6 +43,7 @@ ActiveAdmin.register Invoice do
       row :legal_date
       number_row("Monto", :amount, as: :human, &:amount)
       row :city
+      bool_row :active
     end
   end
 
@@ -44,21 +57,40 @@ ActiveAdmin.register Invoice do
                                '17:10', '18:10', '19:10'
                              ]
                            }
+
       f.input :state
-      f.input :category_id, as: :search_select, url: admin_categories_path,
-                            fields: [:name], display_name: 'name',
-                            minimum_input_length: 1, width: '50%'
+
+      f.input :category_id, as: :search_select,
+                            url: proc { current_admin_user.categories_url },
+                            fields: [:name],
+                            display_name: 'name',
+                            minimum_input_length: 1,
+                            width: '50%'
       f.input :paid
+
       f.input :amount
-      f.input :number, as: :tags, collection: ["0002-00000001", "0002-00004684"], width: "400px"
-      f.input :item_ids, as: :tags, collection: Item.all, display_name: :full_name
+
+      f.input :number, as: :tags,
+                       collection: ["0002-00000001", "0002-00004684"],
+                       width: "400px"
+
+      f.input :item_ids, as: :selected_list,
+                         width: "40%",
+                         fields: [:name],
+                         display_name: :name,
+                         minimum_input_length: 1
+
       f.input :attachment
+
       f.input :photo
-      f.input :color, as: :color_picker, palette: Invoice.colors
+
+      f.input :color, as: :color_picker,
+                      palette: Invoice.colors
 
       f.input :city_id, as: :nested_select,
-                        width: "150px",
-                        fields: [:name], display_name: 'name',
+                        width: "50%",
+                        fields: [:name],
+                        display_name: 'name',
                         minimum_input_length: 0,
                         level_1: {
                           attribute: :country_id,
