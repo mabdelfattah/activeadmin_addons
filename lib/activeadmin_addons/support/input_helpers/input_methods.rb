@@ -10,7 +10,7 @@ module ActiveAdminAddons
     end
 
     def valid_object
-      raise "blank object given" if @object.blank?
+      # raise "blank object given" if @object.blank?
       @object
     end
 
@@ -38,7 +38,7 @@ module ActiveAdminAddons
     end
 
     def input_value
-      valid_object.send(valid_method)
+      valid_object.send(valid_method) if valid_object
     end
 
     def translated_method
