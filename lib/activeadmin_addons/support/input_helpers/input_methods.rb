@@ -10,7 +10,6 @@ module ActiveAdminAddons
     end
 
     def valid_object
-      # raise "blank object given" if @object.blank?
       @object
     end
 
@@ -23,7 +22,7 @@ module ActiveAdminAddons
     end
 
     def method_model
-      object_class.reflect_on_association(association_name).try(:klass) ||
+      object_class.try(:reflect_on_association, association_name).try(:klass) ||
         association_name.classify.constantize
     end
 
