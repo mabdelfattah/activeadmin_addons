@@ -26,5 +26,12 @@ class SearchSelectInput < ActiveAdminAddons::InputBase
       value: @options[:order_by],
       default: get_data_attr_value(:fields).first.to_s + "_desc"
     )
+    load_data_attr(:multiple, default: false)
+
+    if get_data_attr_value(:multiple)
+      load_attr(:name, value: method_to_input_array_name)
+      load_attr(:multiple, value: "multiple")
+    end
   end
+  
 end
