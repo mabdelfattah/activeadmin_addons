@@ -23,7 +23,7 @@ module ActiveAdminAddons
 
     def method_model
       object_class.try(:reflect_on_association, association_name).try(:klass) ||
-        association_name.classify.constantize
+        association_name.classify.safe_constantize || object_class
     end
 
     def tableize_method
