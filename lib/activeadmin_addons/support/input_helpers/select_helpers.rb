@@ -15,7 +15,7 @@ module ActiveAdminAddons
 
     def initial_collection_to_select_options
       initial_options = [[nil]] # add blank option
-      selected = selected_item
+      selected = selected_item if method_model != NilClass
 
       if selected
         selected_option = item_to_select_option(selected)
