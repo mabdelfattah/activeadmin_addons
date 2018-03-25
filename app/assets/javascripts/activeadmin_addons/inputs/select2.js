@@ -34,6 +34,10 @@ $(function() {
         selectConfig.width = 'resolve';
       }
 
+      if ($(select).data('tags')) {
+        selectConfig.tags= true;
+      }
+
       $(select).select2(selectConfig);
 
       // Related with https://github.com/select2/select2/issues/3320
