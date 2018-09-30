@@ -37,7 +37,7 @@ module ActiveAdminAddons
     end
 
     def input_value
-      valid_object.send(valid_method) if valid_object
+      @input_value ||= valid_object.send(valid_method)
     end
 
     def translated_method

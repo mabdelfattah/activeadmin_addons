@@ -54,7 +54,7 @@ $.fn.select2.amd.define('select2/data/nestedCustomAdapter', ['select2/data/array
   return CustomData;
 });
 
-$(function() {
+var initializer = function() {
   configureSelect2(document);
 
   $(document).on('has_many_add:after', function(event, container) {
@@ -68,6 +68,7 @@ $(function() {
       var element = $(el);
       var url = element.data('url');
       var fields = element.data('fields');
+      var predicate = element.data('predicate');
       var displayName = element.data('display-name');
       var parent = element.data('parent');
       var width = element.data('width');
@@ -100,7 +101,7 @@ $(function() {
               if (field == 'id') {
                 textQuery[field + '_eq'] = params.term;
               } else {
-                textQuery[field + '_contains'] = params.term;
+                textQuery[field + '_' + predicate] = params.term;
               }
             });
 
@@ -157,4 +158,7 @@ $(function() {
       }
     });
   }
-});
+};
+
+$(initializer);
+$(document).on('turbolinks:load', initializer);

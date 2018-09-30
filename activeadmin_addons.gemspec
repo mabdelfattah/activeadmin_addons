@@ -1,3 +1,4 @@
+# coding: utf-8
 # rubocop:disable Metrics/LineLength
 $:.push File.expand_path("../lib", __FILE__)
 
@@ -18,22 +19,26 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
 
   s.add_dependency "railties"
+  s.add_dependency "sass"
   s.add_dependency "select2-rails-latest", "~> 4.0"
   s.add_dependency "xdan-datetimepicker-rails", "~> 2.5.1"
   s.add_dependency "require_all", "~> 1.5"
+  s.add_dependency "active_material"
 
-  s.add_development_dependency "rails", ">= 4"
+  s.add_development_dependency "rails", "~> 4.2"
   s.add_development_dependency "sqlite3"
-  s.add_development_dependency "rspec-rails", "3.0.1"
-  s.add_development_dependency "pry-rails", "0.3.2"
-  s.add_development_dependency "factory_girl_rails", "4.4.0"
-  s.add_development_dependency "shoulda-matchers", "2.6.1"
-  s.add_development_dependency "guard", "~> 2.7.0"
-  s.add_development_dependency "guard-rspec", "~> 4.3"
-  s.add_development_dependency "capybara"
+  s.add_development_dependency "sass-rails"
   s.add_development_dependency "enumerize", "~> 2.0"
   s.add_development_dependency "paperclip"
   s.add_development_dependency "aasm"
-  s.add_development_dependency "selenium-webdriver"
+
+  s.add_development_dependency "chromedriver-helper"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "pry-rails"
+  s.add_development_dependency "factory_bot_rails"
+  s.add_development_dependency "shoulda-matchers"
+  s.add_development_dependency "guard"
+  s.add_development_dependency "guard-rspec"
+  s.add_development_dependency "capybara-selenium"
   s.add_development_dependency "database_cleaner"
 end
