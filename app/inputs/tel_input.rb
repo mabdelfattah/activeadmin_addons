@@ -13,7 +13,8 @@ class TelInput < ActiveAdminAddons::InputBase
   def virtual_input_html_options(id)
     input_html_options.merge!({
       id: id,
-      class: 'tel-input'
+      class: 'tel-input',
+      value: @object[method]
     })
   end
 
