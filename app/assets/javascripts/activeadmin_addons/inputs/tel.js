@@ -1,9 +1,13 @@
 var initializer = function() {
-  var tel_inputs = document.querySelector(".tel-input");
-  window.intlTelInput(tel_inputs, {
-    utilsScript: '/assets/intlTelInput_utils.js',
-    separateDialCode: true
+  let telInputs = document.querySelectorAll(".tel-input");
+  telInputs.forEach(function(telInput){
+    window.intlTelInput(telInput, {
+      utilsScript: '/assets/intlTelInput_utils.js',
+      separateDialCode: true,
+      hiddenInput: telInput.dataset.hiddenInput
+    });
   });
+
 };
 
 $(initializer);
