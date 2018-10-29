@@ -3,6 +3,7 @@
 //= require palette-color-picker
 //= require intlTelInput.min
 //= require intlTelInput_utils
+//= require jsoneditor.min
 //
 //= require ./config
 //= require ./inputs/select2
@@ -13,5 +14,6 @@
 //= require ./inputs/date-time-picker
 //= require ./inputs/color-picker
 //= require ./inputs/tel
+//= require ./inputs/jsoneditor
 //= require ./addons/toggle_bool
 //= require ./addons/interactive_select_tag

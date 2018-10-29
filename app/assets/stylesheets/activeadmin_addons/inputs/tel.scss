@@ -3,7 +3,7 @@
 }
 
 @media (-webkit-min-device-pixel-ratio:2),
-(min-resolution:192dpi) {
+  (min-resolution:192dpi) {
   .iti-flag {
     background-image: asset-url('flags@2x') !important;
   }
