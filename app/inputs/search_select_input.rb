@@ -22,17 +22,17 @@ class SearchSelectInput < ActiveAdminAddons::InputBase
     load_data_attr(:width, default: "80%")
     load_data_attr(:multiple, default: false)
     load_data_attr(:per_page, default: 30)
+    load_data_attr(:query_extras, default: 'null')
     load_data_attr(
       :order,
       value: @options[:order_by],
       default: get_data_attr_value(:fields).first.to_s + "_desc"
     )
-    load_data_attr(:multiple, default: false)
 
     if get_data_attr_value(:multiple)
       load_attr(:name, value: method_to_input_array_name)
       load_attr(:multiple, value: "multiple")
     end
   end
-  
+
 end
