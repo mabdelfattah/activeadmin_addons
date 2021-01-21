@@ -12,7 +12,7 @@ class SearchSelectInput < ActiveAdminAddons::InputBase
   end
 
   def load_control_attributes
-    opts = select_options
+    opts = default_options.merge(ActiveadminAddons.default_select_options)
     load_class(@options[:class])
     load_data_attr(:fields, default: opts[:fields], formatter: :to_json)
     load_data_attr(:predicate, default: opts[:predicate])
@@ -35,15 +35,4 @@ class SearchSelectInput < ActiveAdminAddons::InputBase
       load_attr(:multiple, value: "multiple")
     end
   end
-
-  def select_options
-    default_options = {
-      fields: ["name"],  predicate: "contains", display_name: 'name',
-      minimum_input_length: 1, width: "80%", multiple: false,
-      per_page: 30, query_extras: 'null',
-      url: url_from_method, response_root: tableize_method
-    }
-    default_options.merge(ActiveadminAddons.default_select_options)
-  end
-
 end
