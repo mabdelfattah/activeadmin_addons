@@ -1,12 +1,12 @@
-var initializer = function() {
+var initializer = function () {
   setupSearchSelect(document);
 
-  $(document).on('has_many_add:after', function(event, container) {
+  $(document).on('has_many_add:after', function (event, container) {
     setupSearchSelect(container);
   });
 
   function setupSearchSelect(container) {
-    $('.search-select-input, .search-select-filter-input, ajax-filter-input', container).each(function(i, el) {
+    $('.search-select-input, .search-select-filter-input, ajax-filter-input', container).each(function (i, el) {
       var element = $(el);
       var url = element.data('url');
       var fields = element.data('fields');
@@ -27,9 +27,11 @@ var initializer = function() {
           dataType: 'json',
           delay: 250,
           cache: true,
-          data: function(params) {
-            var textQuery = { m: 'or' };
-            fields.forEach(function(field) {
+          data: function (params) {
+            var textQuery = {
+              m: 'or'
+            };
+            fields.forEach(function (field) {
               if (field == 'id') {
                 textQuery[field + '_eq'] = params.term;
               } else {
@@ -45,15 +47,17 @@ var initializer = function() {
               },
             };
 
-            return query;
+            var queryExtras = JSON.parse(element.data('query-extras')) || {}
+
+            return $.extend(true, query, queryExtras);
           },
-          processResults: function(data) {
+          processResults: function (data) {
             if (data.constructor == Object) {
               data = data[responseRoot];
             }
 
             return {
-              results: jQuery.map(data, function(resource) {
+              results: jQuery.map(data, function (resource) {
                 if (!resource[displayName]) {
                   resource[displayName] = 'No display name for id #' + resource.id.toString();
                 }

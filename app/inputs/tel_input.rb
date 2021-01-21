@@ -8,6 +8,8 @@ class TelInput < ActiveAdminAddons::InputBase
 
   def load_control_attributes
     load_data_attr(:hidden_input, value: method.to_s)
+    load_data_attr(:initial_country, default: '')
+    load_data_attr(:preferred_countries, default: '')
   end
 
   def virtual_input_html_options(id)
