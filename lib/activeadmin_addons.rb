@@ -22,8 +22,7 @@ module ActiveadminAddons
     {
       fields: ["name"],  predicate: "contains", display_name: 'name',
       minimum_input_length: 1, width: "80%", multiple: false,
-      per_page: 30, query_extras: 'null',
-      url: url_from_method, response_root: tableize_method
+      per_page: 30, query_extras: 'null'
     }.merge (@default_select_options || {})
   end
 
