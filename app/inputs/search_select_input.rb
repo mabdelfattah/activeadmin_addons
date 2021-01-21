@@ -12,7 +12,7 @@ class SearchSelectInput < ActiveAdminAddons::InputBase
   end
 
   def load_control_attributes
-    opts = default_options.merge(ActiveadminAddons.default_select_options)
+    opts = ActiveadminAddons.default_select_options
     load_class(@options[:class])
     load_data_attr(:fields, default: opts[:fields], formatter: :to_json)
     load_data_attr(:predicate, default: opts[:predicate])
