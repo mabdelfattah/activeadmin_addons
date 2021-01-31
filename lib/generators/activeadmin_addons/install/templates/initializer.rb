@@ -23,5 +23,5 @@ ActiveadminAddons.setup do |config|
   # config.default_selected_list_options = { fields: ["name"],  predicate: "contains", display_name: 'name', minimum_input_length: 1, width: "80%"}
 
   # To set default options for the tel input
-  # config.default_selected_list_options = { initial_country: 'eg', preferred_countries: ' ae, eg, sa' }
+  # config.default_tel_options = { initial_country: 'eg', preferred_countries: ' ae, eg, sa' }
 end
