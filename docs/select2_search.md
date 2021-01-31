@@ -36,3 +36,24 @@ If you want to use url helpers, use a `proc` like on the example
 * `width`: **(optional)** You can set the select input width (px or %).
 * `order_by`: **(optional)** Order (sort) results by a specific attribute, suffixed with `_desc` or `_asc`. Eg: `description_desc`. By **default** is used the first field in descending direction.
 * `predicate`: **(optional)** You can change the default [ransack predicate](https://github.com/activerecord-hackery/ransack#search-matchers). It **defaults to** `contains`
+
+## Overriding defaults
+
+You can modify, in the gem's setup block, the default options like this:
+
+```ruby
+ActiveadminAddons.setup do |config|
+  # Set default options for SearchSelectInput only.
+  config.default_select_options = {
+    fields: ["name"],  predicate: "contains", display_name: 'name',
+    minimum_input_length: 1, width: "80%", multiple: false,
+    per_page: 30, query_extras: 'null'
+  }
+
+  # Or you can set same defaults for many inputs at once (SearchSelectInput, SelectedListInput and NestedLevelInput)
+  config.base_default_options = {
+    fields: ["name"],  predicate: "contains", display_name: 'name',
+    minimum_input_length: 1, width: "80%"
+  }
+end
+```
