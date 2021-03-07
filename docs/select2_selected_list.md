@@ -24,7 +24,7 @@ f.input :performer_ids, as: :selected_list
 
 To get...
 
-<img src="./images/select2-selected-list.gif" />
+<img src='./images/select2-selected-list.gif' />
 
 > Remember: the input name must be: `performer_ids` not `performers` and you need to add to `permit_params` the `performer_ids: []` key.
 
@@ -47,14 +47,14 @@ You can modify, in the gem's setup block, the default options like this:
 ActiveadminAddons.setup do |config|
   # Set default options for SelectedListInput only.
   config.default_selected_list_options = {
-    fields: ["name"],  predicate: "contains", display_name: 'name',
-    minimum_input_length: 1, width: "80%"
+    fields: ['name'],  predicate: 'contains', display_name: 'name',
+    minimum_input_length: 1, width: '80%'
   }
 
   # Or you can set same defaults for many inputs at once (SearchSelectInput, SelectedListInput and NestedLevelInput)
   config.base_default_options = {
-    fields: ["name"],  predicate: "contains", display_name: 'name',
-    minimum_input_length: 1, width: "80%"
+    fields: ['name'],  predicate: 'contains', display_name: 'name',
+    minimum_input_length: 1, width: '80%'
   }
 end
 ```

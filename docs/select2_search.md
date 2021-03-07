@@ -10,7 +10,7 @@ To enable select2 ajax search functionality you need to do the following:
           order_by: 'description_asc'
 ```
 
-<img src="./images/select2-search-select.gif" />
+<img src='./images/select2-search-select.gif' />
 
 ## Filter Usage
 
@@ -25,7 +25,7 @@ If you want to use url helpers, use a `proc` like on the example
 
 ### Options
 
-* `category_id`: Notice we're using the relation field name, not the realtion itself, so you can't use `f.input :category`.
+* `category_id`: Notice we're using the relation field name, not the relation itself, so you can't use `f.input :category`.
 * `url`: This is the URL where to get the results. This URL expects an activeadmin collection Url (like the index action) or anything that uses [ransack](https://github.com/activerecord-hackery/ransack) search gem.
 * `response_root`: **(optional)** If a request to `url` responds with root, you can indicate the name of that root with this attribute. By default, the gem will try to infer the root from url. For example: if `url` is `GET /admin/categories`, the root will be `categories`. If you have a rootless api, you don't need to worry about this attribute.
 * `fields`: an array of field names where to search for matches in the related model (`Category` in this example). If we give many fields, they will be searched with an OR condition.
@@ -45,15 +45,15 @@ You can modify, in the gem's setup block, the default options like this:
 ActiveadminAddons.setup do |config|
   # Set default options for SearchSelectInput only.
   config.default_select_options = {
-    fields: ["name"],  predicate: "contains", display_name: 'name',
-    minimum_input_length: 1, width: "80%", multiple: false,
+    fields: ['name'],  predicate: 'contains', display_name: 'name',
+    minimum_input_length: 1, width: '80%', multiple: false,
     per_page: 30, query_extras: 'null'
   }
 
   # Or you can set same defaults for many inputs at once (SearchSelectInput, SelectedListInput and NestedLevelInput)
   config.base_default_options = {
-    fields: ["name"],  predicate: "contains", display_name: 'name',
-    minimum_input_length: 1, width: "80%"
+    fields: ['name'],  predicate: 'contains', display_name: 'name',
+    minimum_input_length: 1, width: '80%'
   }
 end
 ```

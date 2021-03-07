@@ -48,7 +48,7 @@ module CapybaraHelpers
   end
 
   def pick_select2_entered_option(item_text, display_name = nil)
-    display_name = item_text unless display_name
+    display_name ||= item_text
     fill_select2_input(item_text)
     click_select2_option(display_name)
   end

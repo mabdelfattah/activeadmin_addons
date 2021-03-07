@@ -1,5 +1,4 @@
 class TelInput < ActiveAdminAddons::InputBase
-
   def render_custom_input
     concat(label_html)
     virtual_attr = build_virtual_attr
@@ -15,10 +14,9 @@ class TelInput < ActiveAdminAddons::InputBase
 
   def virtual_input_html_options(id)
     input_html_options.merge!({
-      id: id,
-      class: 'tel-input',
-      value: @object[method]
-    })
+                                id: id,
+                                class: 'tel-input',
+                                value: @object[method]
+                              })
   end
-
 end

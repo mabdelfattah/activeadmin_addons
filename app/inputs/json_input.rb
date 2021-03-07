@@ -1,5 +1,4 @@
 class JsonInput < ActiveAdminAddons::InputBase
-
   def render_custom_input
     concat(label_html)
     concat('<div class="jsoneditor-wrap">')

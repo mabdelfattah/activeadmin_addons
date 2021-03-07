@@ -25,14 +25,15 @@ class NestedLevelInput < ActiveAdminAddons::InputBase
     load_data_attr(:response_root, default: tableize_method)
     load_data_attr(:width, default: opts[:width])
     load_data_attr(:order,
-      value: @options[:order_by],
-      default: get_data_attr_value(:fields).first.to_s + "_desc")
+                   value: @options[:order_by],
+                   default: get_data_attr_value(:fields).first.to_s + "_desc")
     load_parent_data_options
     load_collection_data
   end
 
   def load_parent_data_options
     return unless @options[:parent_attribute]
+
     load_data_attr(:parent, value: @options[:parent_attribute])
     load_data_attr(:parent_id, value: @object.send(@options[:parent_attribute]), default: -1)
   end
