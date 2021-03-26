@@ -42,6 +42,7 @@ module ActiveAdminAddons
 
     def item_to_select_option(item)
       return unless item
+
       {
         id: item.send((valid_options[:value] || :id)),
         text: item.send((valid_options[:display_name] || :name))
@@ -79,6 +80,7 @@ module ActiveAdminAddons
 
     def valid_options
       raise "missing @options hash" unless !!@options
+
       @options
     end
 

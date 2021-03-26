@@ -8,6 +8,7 @@ module ActiveAdminAddons
                    end
 
       raise "you need to pass an enumerize or enum attribute" unless @enum_attr
+
       append_tag
     end
 

@@ -1,7 +1,7 @@
 module ActiveadminAddons
   module Generators
     class InstallGenerator < Rails::Generators::Base
-      source_root File.expand_path('../templates', __FILE__)
+      source_root File.expand_path('templates', __dir__)
       class_option :theme, type: :string, default: '', desc: "Use default or 'material' theme"
 
       def create_initializer
@@ -14,7 +14,7 @@ module ActiveadminAddons
 
         begin
           inject_into_file("#{file_path}.js.coffee", coffee_assets, after: reference)
-        rescue
+        rescue StandardError
           reference = "//= require active_admin/base\n"
           inject_into_file("#{file_path}.js", js_assets, after: reference)
         end
@@ -25,7 +25,7 @@ module ActiveadminAddons
 
         begin
           prepend_file("#{file_path}.scss", css_assets)
-        rescue
+        rescue StandardError
           prepend_file("#{file_path}.css.scss", css_assets)
         end
       end

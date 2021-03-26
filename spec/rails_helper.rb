@@ -1,7 +1,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'spec_helper'
-require File.expand_path("../dummy/config/environment", __FILE__)
+require File.expand_path('dummy/config/environment', __dir__)
 require 'rspec/rails'
 require 'factory_bot_rails'
 require 'capybara/rspec'
@@ -14,7 +14,7 @@ require 'database_cleaner'
 require 'pry'
 
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
-Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each { |f| require f }
+Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].sort.each { |f| require f }
 
 Paperclip.options[:log] = false
 

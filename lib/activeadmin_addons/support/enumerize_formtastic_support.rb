@@ -15,4 +15,4 @@ module ActiveAdminAddons
   end
 end
 
-::Formtastic::FormBuilder.send :prepend, ActiveAdminAddons::RansackFormBuilderExtension
+::Formtastic::FormBuilder.prepend ActiveAdminAddons::RansackFormBuilderExtension
